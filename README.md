@@ -7,9 +7,9 @@ Video doorbells need mounting, wiring, and Wi-Fi at the door. Timbre is a
 printed QR code: renters, dorms, and temporary homes can use it today.
 
 ## MVP (Phase 1)
-- [ ] Visitor page with 3 buttons: Delivery, Family & Friends, Other
-- [ ] Push notification via ntfy
-- [ ] Random, unguessable ID in the URL (/ring/<id>)
+- [x] Visitor page with 3 buttons: Delivery, Family & Friends, Other
+- [x] Push notification via ntfy
+- [x] Random, unguessable ID in the URL (/ring/<id>)
 - [ ] Printable QR code
 
 ## Phase 2
