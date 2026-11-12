@@ -23,6 +23,8 @@ def ring(ring_id):
 
     if request.method == "POST":
         category = request.form["category"]
+        if category not in MESSAGES:
+            abort(400)
         print(f"🔔 Someone rang: {category}")
         requests.post(
             f"https://ntfy.sh/{NTFY_TOPIC}",
@@ -33,6 +35,9 @@ def ring(ring_id):
 
     return render_template("ring.html")
 
+@app.errorhandler(400)
+def bad_request(e):
+    return "Invalid request.", 400
 
 if __name__ == "__main__":
     app.run(debug=True)
