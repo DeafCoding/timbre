@@ -10,7 +10,7 @@ printed QR code: renters, dorms, and temporary homes can use it today.
 - [x] Visitor page with 3 buttons: Delivery, Family & Friends, Other
 - [x] Push notification via ntfy
 - [x] Random, unguessable ID in the URL (/ring/<id>)
-- [ ] Printable QR code
+- [x] Printable QR code
 
 ## Phase 2
 - [ ] User registration, one QR per user

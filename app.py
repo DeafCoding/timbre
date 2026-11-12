@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request, abort   # ← agregué abort
+from flask import Flask, render_template, request, abort
+from dotenv import load_dotenv
 import os
 import requests
+
+load_dotenv()
 
 MESSAGES = {
     "delivery": "📦 A delivery is waiting at your door",
@@ -8,16 +11,17 @@ MESSAGES = {
     "other": "❓ Seems that someone is waiting for you",
 }
 NTFY_TOPIC = os.environ["NTFY_TOPIC"]
-RING_ID = os.environ["RING_ID"]                                 # ← nuevo
+RING_ID = os.environ["RING_ID"]
 
 app = Flask(__name__)
 
-@app.route("/ring/<ring_id>", methods=["GET", "POST"])    # ← una sola ruta
+
+@app.route("/ring/<ring_id>", methods=["GET", "POST"])
 def ring(ring_id):
-    if ring_id != RING_ID:                                      # ← ¿coincide con el secreto?
+    if ring_id != RING_ID:
         abort(404)
 
-    if request.method == "POST":                             # ← ¿tocaron un botón?
+    if request.method == "POST":
         category = request.form["category"]
         print(f"🔔 Someone rang: {category}")
         requests.post(
@@ -27,7 +31,8 @@ def ring(ring_id):
         )
         return "Thanks! The resident has been notified."
 
-    return render_template("ring.html")                     # ← si no, muestra los botones
+    return render_template("ring.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
