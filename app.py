@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, abort
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from dotenv import load_dotenv
 import os
 import requests
@@ -14,9 +16,10 @@ NTFY_TOPIC = os.environ["NTFY_TOPIC"]
 RING_ID = os.environ["RING_ID"]
 
 app = Flask(__name__)
-
+limiter = Limiter(get_remote_address, app=app)
 
 @app.route("/ring/<ring_id>", methods=["GET", "POST"])
+@limiter.limit("3 per minute", methods=["POST"])
 def ring(ring_id):
     if ring_id != RING_ID:
         abort(404)
@@ -34,7 +37,9 @@ def ring(ring_id):
         return "Thanks! The resident has been notified."
 
     return render_template("ring.html")
-
+@app.errorhandler(429)
+def too_many(e):
+    return "You rang way too many, let that cool down please"
 @app.errorhandler(400)
 def bad_request(e):
     return "Invalid request.", 400
